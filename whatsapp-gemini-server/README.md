@@ -1,20 +1,41 @@
-# WhatsApp-Gemini MCP Server
+# WhatsApp-Gemini MCP Server with Intelligent Routing 🧠
 
-A Model Context Protocol server that integrates WhatsApp messaging with Google's Gemini LLM, allowing you to send AI-powered responses through WhatsApp.
+A Model Context Protocol server that integrates WhatsApp messaging with Google's Gemini AI, featuring **intelligent routing** between direct AI responses and specialized MCP tools for weather, tasks, and more.
 
-## 🚀 Features
+## 🚀 Current Production Features
 
-- **Send AI-powered WhatsApp messages**: Process messages through Gemini LLM and send responses via WhatsApp
-- **Direct chat with Gemini**: Use Gemini LLM for AI conversations without WhatsApp
-- **Direct WhatsApp messaging**: Send messages directly without AI processing
-- **Service status checking**: Monitor the health of all connected services
+- **🧠 Intelligent Routing**: Automatically routes weather queries to MCP tools, general queries to Gemini
+- **⚡ Real-time Weather**: Integration with National Weather Service API
+- **📱 WhatsApp Integration**: Full Twilio webhook processing with auto-replies  
+- **🔧 MCP Tools**: Send WhatsApp messages from VS Code Gemini
+- **🛡️ Error Handling**: Graceful fallbacks and character limit handling
+- **⚙️ Multi-threading**: Non-blocking webhook responses
 
-## 🛠️ Tools Available
+## 🏗️ Production Architecture
 
-1. **send_whatsapp_with_gemini**: Send messages to WhatsApp after processing through Gemini
-2. **chat_with_gemini**: Chat directly with Gemini LLM
-3. **send_whatsapp_direct**: Send direct WhatsApp messages without AI
-4. **get_server_status**: Check service status
+```
+📱 WhatsApp Message
+    ↓
+🌐 Twilio Webhook → production/whatsapp_mcp_bridge.py
+    ↓ (intelligent keyword analysis)
+🧠 Smart Routing:
+   • Weather keywords → MCP Weather Tools → Real forecast data
+   • General queries → Direct Gemini → Conversational responses
+    ↓
+📱 WhatsApp Auto-Reply (intelligently crafted)
+```
+
+## 🛠️ Available Production Tools
+
+### **WhatsApp MCP Server** (`production/whatsapp_mcp_tools.py`)
+- `send_whatsapp(phone_number, message)` → Send WhatsApp message from VS Code
+- `get_whatsapp_status()` → Check Twilio connection status
+
+### **Intelligent Webhook** (`production/whatsapp_mcp_bridge.py`)  
+- Smart keyword-based routing (weather → MCP, general → Gemini)
+- Real weather data from National Weather Service
+- Character limit handling (1600 chars)
+- Multi-threaded processing for fast responses
 
 ## 📋 Prerequisites
 
@@ -58,26 +79,35 @@ uv sync
 2. Follow the instructions to join the sandbox
 3. Send the activation message to the sandbox number
 
-### 4. Test the Server
+### 4. Test the Production System
 
+**Test Intelligent Webhook:**
 ```powershell
-uv run whatsapp_gemini.py
+cd production
+uv run whatsapp_mcp_bridge.py
 ```
 
-## 🔧 Configuration with Claude Desktop
+**Test MCP Server:**
+```powershell
+# In VS Code, restart and test MCP tools
+cd production  
+uv run whatsapp_mcp_tools.py
+```
 
-Add this to your `claude_desktop_config.json`:
+## 🔧 VS Code MCP Configuration
+
+Your system is configured in `.vscode/mcp.json` with:
 
 ```json
 {
-  "mcpServers": {
-    "whatsapp-gemini": {
+  "servers": {
+    "whatsapp-tools": {
       "command": "C:\\Users\\arunk\\.local\\bin\\uv.exe",
       "args": [
-        "--directory",
-        "c:\\Users\\arunk\\Puch_ai_clone\\whatsapp-gemini-server",
-        "run",
-        "whatsapp_gemini.py"
+        "--directory", 
+        "c:\\Users\\arunk\\Puch_ai_clone\\whatsapp-gemini-server\\production",
+        "run", 
+        "whatsapp_mcp_tools.py"
       ],
       "type": "stdio"
     }
@@ -85,22 +115,44 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-## 📱 Usage Examples
+## 📱 Production Usage Examples
 
-### With Claude Desktop:
+### **In VS Code Gemini Chat:**
 
-1. **Send AI-powered WhatsApp message**:
-   - "Send a WhatsApp message to +1234567890 asking about the weather"
-   - The message will be processed by Gemini and sent via WhatsApp
+1. **Send WhatsApp with current weather data**:
+   ```
+   "Send the weather forecast for New York to +1234567890 via WhatsApp"
+   ```
 
-2. **Chat with Gemini**:
-   - "Ask Gemini about the best programming practices"
+2. **Check system status**:
+   ```
+   "Check the WhatsApp connection status"
+   ```
 
-3. **Send direct WhatsApp**:
-   - "Send 'Hello!' directly to +1234567890 via WhatsApp"
+### **Via WhatsApp (Intelligent Auto-Reply):**
 
-4. **Check service status**:
-   - "Check if all services are working"
+**Weather Queries** (→ Routes to MCP Tools):
+- Send: `"What's the weather in Tokyo?"` → Real forecast data
+- Send: `"Weather in NYC"`→ Current conditions and forecast
+- Send: `"Is it going to rain in London?"` → Precipitation forecast
+
+**General Queries** (→ Routes to Direct Gemini):
+- Send: `"Hi"` → Conversational AI response
+- Send: `"Tell me a joke"` → Gemini-powered humor
+- Send: `"How are you?"` → Natural conversation
+
+### **Smart Routing Examples:**
+```
+Input: "Weather in Chicago" 
+→ Detects weather keywords
+→ Routes to MCP weather tools  
+→ Returns real Chicago forecast
+
+Input: "Hello, how are you?"
+→ No weather/task keywords detected
+→ Routes to direct Gemini
+→ Returns conversational response
+```
 
 ## 🔐 Security Notes
 
@@ -132,13 +184,24 @@ Add this to your `claude_desktop_config.json`:
 
 The server logs all activities to stderr. Check the logs for detailed error information.
 
-## 🔄 Workflow
+## 🔄 Production Workflow
 
-1. **User sends request** → Claude Desktop
-2. **Claude processes** → Calls MCP server tool
-3. **Message sent to Gemini** → Gets AI response
-4. **AI response sent** → WhatsApp via Twilio
-5. **Confirmation returned** → Back to Claude
+1. **WhatsApp User sends message** → Twilio Webhook
+2. **Intelligent webhook** (`production/whatsapp_mcp_bridge.py`) analyzes keywords
+3. **Smart routing decision**:
+   - Weather keywords → Calls MCP weather tools → Real data
+   - General queries → Direct Gemini → Conversational AI
+4. **AI response sent** → WhatsApp via Twilio (auto-reply)
+5. **VS Code MCP integration** → Send messages from Gemini chat
+
+## 🧠 Intelligence Features
+
+- **🎯 Keyword Detection**: Automatically detects weather-related queries
+- **🔄 Dynamic Routing**: Routes to specialized tools vs general AI
+- **🛡️ Graceful Fallbacks**: Falls back to Gemini if MCP tools fail  
+- **⚡ Real-time Data**: Weather from National Weather Service API
+- **📏 Smart Formatting**: Handles WhatsApp 1600 character limits
+- **🔄 Non-blocking**: Multi-threaded webhook processing
 
 ## 🌟 Advanced Features
 
@@ -152,3 +215,34 @@ The server logs all activities to stderr. Check the logs for detailed error info
 - [Google Gemini API](https://ai.google.dev/docs)
 - [Twilio WhatsApp API](https://www.twilio.com/docs/whatsapp)
 - [MCP Protocol](https://modelcontextprotocol.io/)
+
+## 📁 Production File Structure
+
+```
+whatsapp-gemini-server/
+├── production/                    # 🚀 Production-ready code
+│   ├── whatsapp_mcp_bridge.py        # Main intelligent webhook
+│   └── whatsapp_mcp_tools.py         # WhatsApp MCP server for VS Code
+├── legacy/                        # 📦 Archived old versions  
+├── .env                          # 🔑 Environment configuration
+├── README.md                     # 📖 This documentation
+└── setup.ps1                     # ⚙️ Setup script
+```
+
+## 🚀 Quick Start Commands
+
+```powershell
+# Setup the system
+cd whatsapp-gemini-server
+.\setup.ps1
+
+# Start intelligent webhook
+cd production  
+uv run whatsapp_mcp_bridge.py
+
+# In another terminal, expose webhook
+ngrok http 5000
+
+# Test in VS Code Gemini Chat
+"Send a weather update to +1234567890 via WhatsApp"
+```
