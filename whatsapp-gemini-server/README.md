@@ -65,13 +65,18 @@ uv sync
    copy .env.example .env
    ```
 
-2. Edit `.env` file with your credentials:
+2. Edit `.env` file with your **actual credentials**:
    ```env
+   # Google Gemini API (get from https://makersuite.google.com/app/apikey)
    GEMINI_API_KEY=your_actual_gemini_api_key
-   TWILIO_ACCOUNT_SID=your_twilio_account_sid
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token
+   
+   # Twilio Configuration (get from https://console.twilio.com/)  
+   TWILIO_ACCOUNT_SID=your_actual_twilio_account_sid
+   TWILIO_AUTH_TOKEN=your_actual_twilio_auth_token
    TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
    ```
+
+   **⚠️ Important**: Never commit the `.env` file - it's already in `.gitignore`
 
 ### 3. Set Up Twilio WhatsApp Sandbox
 
@@ -96,24 +101,37 @@ uv run whatsapp_mcp_tools.py
 
 ## 🔧 VS Code MCP Configuration
 
-Your system is configured in `.vscode/mcp.json` with:
+Copy the example configuration and customize:
 
-```json
-{
-  "servers": {
-    "whatsapp-tools": {
-      "command": "C:\\Users\\arunk\\.local\\bin\\uv.exe",
-      "args": [
-        "--directory", 
-        "c:\\Users\\arunk\\Puch_ai_clone\\whatsapp-gemini-server\\production",
-        "run", 
-        "whatsapp_mcp_tools.py"
-      ],
-      "type": "stdio"
-    }
-  }
-}
-```
+1. **Copy the template**:
+   ```powershell
+   copy ..\.vscode\mcp.json.example ..\.vscode\mcp.json
+   ```
+
+2. **Edit `.vscode/mcp.json`** with your actual paths and credentials:
+   ```json
+   {
+     "servers": {
+       "whatsapp-tools": {
+         "command": "C:\\Users\\[YOUR_USERNAME]\\.local\\bin\\uv.exe",
+         "args": [
+           "--directory", 
+           "c:\\Users\\[YOUR_USERNAME]\\Puch_ai_clone\\whatsapp-gemini-server\\production",
+           "run", 
+           "whatsapp_mcp_tools.py"
+         ],
+         "type": "stdio",
+         "env": {
+           "GEMINI_API_KEY": "your_actual_gemini_api_key",
+           "TWILIO_ACCOUNT_SID": "your_actual_twilio_account_sid",
+           "TWILIO_AUTH_TOKEN": "your_actual_twilio_auth_token"
+         }
+       }
+     }
+   }
+   ```
+
+   **⚠️ Important**: Replace `[YOUR_USERNAME]` and add your actual API keys
 
 ## 📱 Production Usage Examples
 

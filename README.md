@@ -38,11 +38,12 @@ A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsAp
    - Check connection status
    - Handle message formatting and limits
 
-### **Webhook Receiver** (`whatsapp-gemini-server/webhook_receiver.py`)
-- Receives incoming WhatsApp messages
-- Provides simple auto-replies
-- Logs messages for VS Code processing
-- Integrates with MCP ecosystem
+### **Intelligent Webhook System** (`whatsapp-gemini-server/production/whatsapp_mcp_bridge.py`)
+- Receives incoming WhatsApp messages via Twilio
+- Provides intelligent AI-powered auto-replies with keyword-based routing
+- Routes weather queries to MCP tools, general queries to direct Gemini
+- Multi-threading for non-blocking webhook responses
+- Character limit handling (1600 chars) for WhatsApp compatibility
 
 ## 🚀 What You Can Do
 
@@ -60,23 +61,25 @@ A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsAp
 - Get auto-replies via webhook
 - Process complex requests using VS Code MCP tools
 
-## 📁 Project Structure
+## 📁 Clean Production Structure
 
 ```
 Puch_ai_clone/
 ├── .vscode/
 │   └── mcp.json                    # MCP server configuration
 ├── whatsapp-gemini-server/
-│   ├── whatsapp_mcp_tools.py      # WhatsApp MCP server
-│   ├── webhook_receiver.py        # Webhook message receiver  
-│   ├── whatsapp_master.py         # Integrated demo system
-│   ├── whatsapp_simple.py         # Simple webhook (legacy)
-│   ├── whatsapp_gemini.py         # VS Code MCP server (legacy)
-│   └── .env                       # API credentials
+│   ├── production/
+│   │   ├── whatsapp_mcp_bridge.py     # 🚀 Main intelligent webhook
+│   │   └── whatsapp_mcp_tools.py      # 🔧 WhatsApp MCP server
+│   ├── legacy/                        # 📦 Archived old versions
+│   ├── .env                          # 🔑 Environment configuration
+│   ├── README.md                     # 📖 WhatsApp server docs
+│   └── setup.ps1                     # ⚙️ Setup script
 ├── weather-server/
 │   └── weather-standalone/
-│       └── weather.py             # Weather MCP server
-└── tests/                         # Test files
+│       └── weather.py             # 🌤️ Weather MCP server
+├── README.md                      # 📚 Main documentation
+└── setup.ps1                     # 🚀 Main setup script
 ```
 
 ## ⚡ Quick Start Guide
@@ -103,23 +106,35 @@ uv sync
 ```
 
 ### 🔑 **Step 2: API Configuration**
-Create `whatsapp-gemini-server/.env`:
+Create `whatsapp-gemini-server/.env` from template:
+```powershell
+cd whatsapp-gemini-server
+copy .env.example .env
+```
+
+Edit `.env` with your actual credentials:
 ```env
 # Google Gemini API (get from https://makersuite.google.com/app/apikey)
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_actual_gemini_api_key
 
 # Twilio Configuration (get from https://console.twilio.com/)
-TWILIO_ACCOUNT_SID=your_twilio_account_sid
-TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_ACCOUNT_SID=your_actual_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_actual_twilio_auth_token
 TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+```
+
+Setup VS Code MCP configuration:
+```powershell
+copy .vscode\mcp.json.example .vscode\mcp.json
+# Edit .vscode/mcp.json with your actual paths and API keys
 ```
 
 ### 🚀 **Step 3: Start the System**
 
-#### **Option A: For WhatsApp Auto-Reply (Standalone)**
+#### **Option A: For Intelligent WhatsApp Auto-Reply**
 ```powershell
-cd whatsapp-gemini-server
-uv run python webhook_receiver.py
+cd whatsapp-gemini-server\production
+uv run whatsapp_mcp_bridge.py
 ```
 Then expose with ngrok:
 ```powershell
