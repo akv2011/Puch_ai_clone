@@ -1,6 +1,12 @@
 # Multi-Server MCP System with WhatsApp Intelligence 🚀
 
-A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsApp messaging**, **Weather APIs**, **Task Management**, and **Google Gemini AI** for intelligent automation and conversation handling.
+A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsApp messaging**, **Weather APIs**, **Financial Data**, **Task Management**, and **Google Gemini AI** for intelligent automation and conversation handling.
+
+## 📚 **Documentation**
+
+- 🔌 **[How to Add New MCP Servers](HOW_TO_ADD_MCP_SERVERS.md)** - Complete guide to extending your system
+- ⚙️ **[MCP Configuration Examples](HOW_TO_ADD_MCP_SERVERS.md#step-5-update-mcp-configuration)** - Real-world server configurations
+- 🌟 **[Available MCP Servers](HOW_TO_ADD_MCP_SERVERS.md#examples-of-available-mcp-servers)** - Browse popular integrations
 
 ## 🎯 THE COMPLETE FLOW
 
@@ -22,12 +28,34 @@ A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsAp
 
 ## 🏗️ System Architecture
 
-### **4 MCP Servers Working Together:**
+## 🔌 **Adding New MCP Servers**
 
-1. **Weather Server** (`weather-server/weather.py`)
-   - Get weather forecasts by coordinates
-   - Get weather alerts by state
-   - National Weather Service API integration
+Want to add more functionality? It's easy! Follow our comprehensive guide:
+
+👉 **[Complete Guide: How to Add New MCP Servers](HOW_TO_ADD_MCP_SERVERS.md)**
+
+**Quick Setup for Example Servers:**
+```bash
+# Linux/Mac
+./setup_external_servers.sh
+
+# Windows
+setup_external_servers.bat
+```
+
+**Manual Examples:**
+- 🏦 **Financial Data**: Clone `financial-datasets-server` → Add API key → Update config
+- 🌤️ **Weather**: Clone `weather-server-new` → Get OpenWeatherMap key → Configure
+- 📊 **Analytics**: Find analytics MCP → Install deps → Add to bridge
+
+The system **automatically discovers** new tools - no manual routing needed!
+
+### **Current MCP Servers:**
+
+1. **Weather Server** (`weather-server-new/weather_mcp_server.py`)
+   - 8-day weather forecasts with hourly data
+   - Current weather conditions globally
+   - OpenWeatherMap One Call API 3.0 integration
 
 2. **Task Master AI** (NPM package)
    - Project management and task tracking
