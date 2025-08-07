@@ -7,6 +7,11 @@
 # VS Code MCP configuration with credentials
 .vscode/mcp.json
 
+# External MCP Servers (cloned repositories)
+weather-server-new/
+weekly-weather-mcp/
+financial-datasets-server/
+
 # Python
 __pycache__/
 *.pyc

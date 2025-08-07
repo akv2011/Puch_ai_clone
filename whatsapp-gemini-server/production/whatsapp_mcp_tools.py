@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-"""
-WhatsApp MCP Server
-Provides WhatsApp sending tools to VS Code Gemini
-This runs as an MCP server, NOT a webhook receiver
-"""
+
 
 import os
 import logging

@@ -1,15 +1,14 @@
 {
   "servers": {
     "weather": {
-      "command": "C:\\Users\\[YOUR_USERNAME]\\.local\\bin\\uv.exe",
+      "command": "C:\\Users\\[YOUR_USERNAME]\\Puch_ai_clone\\.venv\\Scripts\\python.exe",
       "args": [
-        "--directory",
-        "c:\\Users\\[YOUR_USERNAME]\\Puch_ai_clone\\weather-server\\weather-standalone",
-        "run",
-        "weather.py"
+        "c:\\Users\\[YOUR_USERNAME]\\Puch_ai_clone\\weather-server-new\\weather_mcp_server.py"
       ],
       "type": "stdio",
-      "env": {}
+      "env": {
+        "OPENWEATHER_API_KEY": "your_openweather_api_key_here"
+      }
     },
     "task-master-ai": {
       "command": "npx",
@@ -36,6 +35,19 @@
         "GEMINI_API_KEY": "your_gemini_api_key_here",
         "TWILIO_ACCOUNT_SID": "your_twilio_account_sid_here",
         "TWILIO_AUTH_TOKEN": "your_twilio_auth_token_here"
+      }
+    },
+    "financial-datasets": {
+      "command": "C:\\Users\\[YOUR_USERNAME]\\.local\\bin\\uv.exe",
+      "args": [
+        "--directory",
+        "c:\\Users\\[YOUR_USERNAME]\\Puch_ai_clone\\financial-datasets-server",
+        "run",
+        "server.py"
+      ],
+      "type": "stdio",
+      "env": {
+        "FINANCIAL_DATASETS_API_KEY": "your_financial_datasets_api_key_here"
       }
     }
   }

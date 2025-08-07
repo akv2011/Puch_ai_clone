@@ -15,13 +15,14 @@ A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsAp
    • weather → get forecasts & alerts
    • task-master-ai → manage tasks & projects  
    • whatsapp-tools → send responses back
+   • financial-datasets → stock data & market analysis
     ↓ (sends AI-powered response)
 📱 WhatsApp User (receives intelligent reply)
 ```
 
 ## 🏗️ System Architecture
 
-### **3 MCP Servers Working Together:**
+### **4 MCP Servers Working Together:**
 
 1. **Weather Server** (`weather-server/weather.py`)
    - Get weather forecasts by coordinates
@@ -37,6 +38,12 @@ A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsAp
    - Send WhatsApp messages via Twilio
    - Check connection status
    - Handle message formatting and limits
+
+4. **Financial Datasets** (`financial-datasets-server/server.py`)
+   - Real-time stock prices and historical data
+   - Company financial statements (income, balance sheet, cash flow)
+   - Cryptocurrency prices and market data
+   - Company news and market analysis
 
 ### **Intelligent Webhook System** (`whatsapp-gemini-server/production/whatsapp_mcp_bridge.py`)
 - Receives incoming WhatsApp messages via Twilio
@@ -78,6 +85,9 @@ Puch_ai_clone/
 ├── weather-server/
 │   └── weather-standalone/
 │       └── weather.py             # 🌤️ Weather MCP server
+├── financial-datasets-server/     # 💰 Financial data MCP server
+│   ├── server.py                  # 📈 Stock & crypto data API
+│   └── .env                       # 🔑 Financial Datasets API key
 ├── README.md                      # 📚 Main documentation
 └── setup.ps1                     # 🚀 Main setup script
 ```
@@ -91,6 +101,7 @@ Puch_ai_clone/
 - ngrok (for webhook exposure)
 - Google Gemini API Key
 - Twilio Account (free tier works)
+- Financial Datasets API Key (get from [financialdatasets.ai](https://financialdatasets.ai))
 
 ### 📋 **Step 1: Installation**
 ```powershell
@@ -102,6 +113,8 @@ cd Puch_ai_clone
 cd whatsapp-gemini-server
 uv sync
 cd ../weather-server/weather-standalone
+uv sync
+cd ../../financial-datasets-server
 uv sync
 ```
 
@@ -121,6 +134,9 @@ GEMINI_API_KEY=your_actual_gemini_api_key
 TWILIO_ACCOUNT_SID=your_actual_twilio_account_sid
 TWILIO_AUTH_TOKEN=your_actual_twilio_auth_token
 TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+
+# Financial Datasets API (get from https://financialdatasets.ai/)
+FINANCIAL_DATASETS_API_KEY=your_actual_financial_api_key
 ```
 
 Setup VS Code MCP configuration:
@@ -169,6 +185,19 @@ send_whatsapp(phone_number, message) → Send WhatsApp message
 get_whatsapp_status() → Check Twilio connection
 ```
 
+### Financial Datasets (`financial-datasets`)
+```
+get_current_stock_price(ticker) → Current stock price
+get_historical_stock_prices(ticker, start, end) → Historical prices
+get_income_statements(ticker) → Company income statements
+get_balance_sheets(ticker) → Company balance sheets
+get_cash_flow_statements(ticker) → Company cash flow data
+get_company_news(ticker) → Latest company news
+get_current_crypto_price(ticker) → Current crypto price
+get_historical_crypto_prices(ticker, start, end) → Historical crypto data
+get_available_crypto_tickers() → List of available crypto symbols
+```
+
 ### Task Master AI (`task-master-ai`)
 ```
 Full task management, project planning, and AI-powered organization
@@ -183,9 +212,24 @@ Full task management, project planning, and AI-powered organization
 "Get the weather forecast for latitude 40.7128, longitude -74.0060 and send it to +1234567890 via WhatsApp"
 ```
 
+**Stock Market Analysis:**
+```
+"Get Apple's current stock price and latest income statement"
+```
+
+**Financial + WhatsApp:**
+```
+"Get Tesla's stock price and send it to my phone via WhatsApp"
+```
+
 **Task Management:**
 ```
 "Create a new task for implementing user authentication"
+```
+
+**Crypto Analysis:**
+```
+"Get Bitcoin's current price and historical data for the last 30 days"
 ```
 
 **Status Check:**
@@ -216,7 +260,7 @@ Full task management, project planning, and AI-powered organization
 GEMINI_API_KEY=your_key_here
 TWILIO_ACCOUNT_SID=your_sid_here
 TWILIO_AUTH_TOKEN=your_token_here
-TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+TWILIO_WHATSAPP_NUMBER=whatsapp:+141552388
 ```
 
 ## 🚀 Advanced Features

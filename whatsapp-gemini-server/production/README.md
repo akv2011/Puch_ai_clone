@@ -9,7 +9,7 @@ This is the **clean, working version** of your multi-server MCP system that prov
 ```
 📱 WhatsApp User
     ↓ (sends message)
-🌐 Twilio Webhook → whatsapp_mcp_bridge.py (Port 5000)
+🌐 Twilio Webhook → whatsapp_mcp_bridge_v2.py (Port 5000)
     ↓ (intelligent routing)  
 💻 Gemini AI analyzes message
     ↓ (routes to appropriate tools)
@@ -26,10 +26,8 @@ This is the **clean, working version** of your multi-server MCP system that prov
 ```
 whatsapp-gemini-server/
 ├── production/                    # 🎯 PRODUCTION FILES
-│   ├── whatsapp_mcp_bridge.py    # Main intelligent webhook (WORKING)
+│   ├── whatsapp_mcp_bridge_v2.py    # Main intelligent webhook (WORKING)
 │   └── whatsapp_mcp_tools.py     # WhatsApp MCP server for VS Code
-├── legacy/                       # 📚 OLD VERSIONS
-│   └── whatsapp_simple.py        # Previous working version
 ├── tests/                        # 🧪 TEST FILES
 ├── .env                          # 🔑 API credentials
 └── pyproject.toml               # 📦 Dependencies
