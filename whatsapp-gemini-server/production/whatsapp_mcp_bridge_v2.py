@@ -84,9 +84,9 @@ MCP_SERVERS = [
         "params": StdioServerParameters(
             command="C:/Users/arunk/Puch_ai_clone/.venv/Scripts/python.exe",
             args=[
-                "C:\\Users\\arunk\\Puch_ai_clone\\weather-server-new\\weather_mcp_server.py"
+                "C:\\Users\\arunk\\Puch_ai_clone\\weather-server-new\\weather_basic_server.py"
             ],
-            env={"OPENWEATHER_API_KEY": os.getenv("OPENWEATHER_API_KEY", "YOUR_OPENWEATHER_API_KEY_HERE")}
+            env={"OPENWEATHER_API_KEY": os.getenv("OPENWEATHER_API_KEY", "01eded1679d0c2b005b5105e661f56cc")}
         )
     },
     {
@@ -101,6 +101,20 @@ MCP_SERVERS = [
                 "server.py"
             ],
             env={"FINANCIAL_DATASETS_API_KEY": os.getenv("FINANCIAL_DATASETS_API_KEY", "714f22c9-a28c-4a13-8e9b-d4876ae1b5c0")}
+        )
+    },
+    {
+        "name": "google-search",
+        "params": StdioServerParameters(
+            command="C:\\Users\\arunk\\.local\\bin\\uv.exe",
+            args=[
+                "--directory", 
+                "C:\\Users\\arunk\\Puch_ai_clone\\google-search-server",
+                "run",
+                "python",
+                "google_search_server.py"
+            ],
+            env={"GEMINI_API_KEY": os.getenv("GEMINI_API_KEY")}
         )
     }
 ]
@@ -173,7 +187,7 @@ async def process_with_gemini_mcp(user_message: str):
             logger.warning("⚠️ No MCP tools available, using direct Gemini response")
             response = gemini_client.models.generate_content(
                 model="gemini-2.5-flash",
-                contents=f"You are a helpful WhatsApp assistant. Current time: {current_time}. Keep responses under 1400 characters.\n\nUser: {user_message}"
+                contents=f"You are a helpful WhatsApp assistant. Current time: {current_time}. Note: Real-time search tools are currently unavailable, so I can only provide general information. Keep responses under 1400 characters.\n\nUser: {user_message}"
             )
             return response.text if response.text else "Sorry, I couldn't process your request."
         
@@ -182,7 +196,25 @@ async def process_with_gemini_mcp(user_message: str):
         # Send to Gemini with all available tools
         response = gemini_client.models.generate_content(
             model="gemini-2.5-flash",
-            contents=f"You are a helpful WhatsApp assistant. Current time: {current_time}. Use available tools when needed to provide accurate, real-time information. Keep responses under 1400 characters and be conversational.\n\nUser message: {user_message}",
+            contents=f"""You are a helpful WhatsApp assistant with powerful real-time search capabilities. Current time: {current_time}.
+
+IMPORTANT: You have access to Google Search tools that can find ANY current information including:
+- Sports results and match outcomes (use search_real_time_news)
+- Latest news and events (use search_real_time_news) 
+- Company information and sentiment (use analyze_company_sentiment)
+- Industry trends (use search_industry_trends)
+- Competitive analysis (use search_competitor_analysis)
+- Financial data (use financial tools)
+- Weather information (use weather tools)
+
+For sports queries like "who won India vs England", "cricket match results", "football scores" - ALWAYS use search_real_time_news to get current results.
+For any current events, news, or recent information - ALWAYS use the appropriate search tools.
+
+NEVER say you cannot provide information about current events or sports - you CAN using the search tools!
+
+Keep responses under 1400 characters and be conversational.
+
+User message: {user_message}""",
             config=types.GenerateContentConfig(
                 temperature=0.1,
                 tools=gemini_tools,

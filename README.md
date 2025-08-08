@@ -52,22 +52,29 @@ The system **automatically discovers** new tools - no manual routing needed!
 
 ### **Current MCP Servers:**
 
-1. **Weather Server** (`weather-server-new/weather_mcp_server.py`)
-   - 8-day weather forecasts with hourly data
+1. **Weather Server** (`weather-server-new/weather_basic_server.py`)
    - Current weather conditions globally
-   - OpenWeatherMap One Call API 3.0 integration
+   - Weather summaries with recommendations
+   - OpenWeatherMap API integration
 
-2. **Task Master AI** (NPM package)
+2. **Google Search Server** (`google-search-server/google_search_server.py`) **🆕**
+   - Real-time news search with AI grounding
+   - Company sentiment analysis across all domains
+   - Industry trend analysis with market insights
+   - Competitive landscape analysis
+   - Google Gemini grounding with source citations
+
+3. **Task Master AI** (NPM package)
    - Project management and task tracking
    - AI-powered task creation and organization
    - Multiple API provider support
 
-3. **WhatsApp Tools** (`whatsapp-gemini-server/whatsapp_mcp_tools.py`)
+4. **WhatsApp Tools** (`whatsapp-gemini-server/whatsapp_mcp_tools.py`)
    - Send WhatsApp messages via Twilio
    - Check connection status
    - Handle message formatting and limits
 
-4. **Financial Datasets** (`financial-datasets-server/server.py`)
+5. **Financial Datasets** (`financial-datasets-server/server.py`)
    - Real-time stock prices and historical data
    - Company financial statements (income, balance sheet, cash flow)
    - Cryptocurrency prices and market data
@@ -104,15 +111,18 @@ Puch_ai_clone/
 │   └── mcp.json                    # MCP server configuration
 ├── whatsapp-gemini-server/
 │   ├── production/
-│   │   ├── whatsapp_mcp_bridge.py     # 🚀 Main intelligent webhook
+│   │   ├── whatsapp_mcp_bridge_v2.py  # 🚀 Main intelligent webhook v2
 │   │   └── whatsapp_mcp_tools.py      # 🔧 WhatsApp MCP server
 │   ├── legacy/                        # 📦 Archived old versions
 │   ├── .env                          # 🔑 Environment configuration
 │   ├── README.md                     # 📖 WhatsApp server docs
 │   └── setup.ps1                     # ⚙️ Setup script
-├── weather-server/
-│   └── weather-standalone/
-│       └── weather.py             # 🌤️ Weather MCP server
+├── weather-server-new/
+│   └── weather_basic_server.py     # 🌤️ Weather MCP server (basic API)
+├── google-search-server/           # 🔍 Google Search MCP server 🆕
+│   ├── google_search_server.py     # 📰 Real-time news & sentiment analysis
+│   ├── pyproject.toml             # 📦 Dependencies configuration
+│   └── .venv/                     # 🐍 Virtual environment
 ├── financial-datasets-server/     # 💰 Financial data MCP server
 │   ├── server.py                  # 📈 Stock & crypto data API
 │   └── .env                       # 🔑 Financial Datasets API key
@@ -203,8 +213,16 @@ ngrok http 5000
 
 ### Weather Server (`weather`)
 ```
-get_forecast(latitude, longitude) → Weather forecast
-get_alerts(state) → Weather alerts for US state
+get_current_weather(location) → Current weather for any location
+get_weather_summary(location) → Weather summary with recommendations
+```
+
+### Google Search Server (`google-search`) **🆕**
+```
+search_real_time_news(query) → Real-time search with AI analysis and sources
+analyze_company_sentiment(company_name) → Company sentiment analysis with market impact
+search_industry_trends(industry) → Industry trend analysis with key players
+search_competitor_analysis(company_name) → Competitive landscape analysis
 ```
 
 ### WhatsApp Tools (`whatsapp-tools`)
@@ -237,7 +255,15 @@ Full task management, project planning, and AI-powered organization
 
 **Weather + WhatsApp:**
 ```
-"Get the weather forecast for latitude 40.7128, longitude -74.0060 and send it to +1234567890 via WhatsApp"
+"Get the current weather for New York and send it to +1234567890 via WhatsApp"
+```
+
+**Real-time Company News & Sentiment:** **🆕**
+```
+"Analyze Tesla's latest news sentiment and market impact"
+"Search for real-time news about Apple's latest product launches"
+"What are the latest industry trends in artificial intelligence?"
+"Analyze Microsoft's competitive landscape and recent developments"
 ```
 
 **Stock Market Analysis:**
@@ -248,6 +274,12 @@ Full task management, project planning, and AI-powered organization
 **Financial + WhatsApp:**
 ```
 "Get Tesla's stock price and send it to my phone via WhatsApp"
+```
+
+**Combined Intelligence:** **🆕**
+```
+"Search for Tesla's latest news sentiment, get their current stock price, and send both to +1234567890"
+"Analyze the AI industry trends and get NVIDIA's current stock price"
 ```
 
 **Task Management:**
@@ -267,7 +299,10 @@ Full task management, project planning, and AI-powered organization
 
 ### **Via WhatsApp:**
 - Send: `"help"` → Get available commands
-- Send: `"weather in New York"` → Get auto-reply with note about MCP tools
+- Send: `"weather in New York"` → Get auto-reply with current weather
+- Send: `"Tesla news sentiment"` → Get company sentiment analysis **🆕**
+- Send: `"AI industry trends"` → Get latest industry developments **🆕**
+- Send: `"Apple vs Microsoft competition"` → Get competitive analysis **🆕**
 - Send: Any message → Get AI auto-reply
 
 ## 🔧 Configuration Files

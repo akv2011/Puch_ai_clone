@@ -1,12 +1,16 @@
-# WhatsApp-Gemini MCP Server with Intelligent Routing 🧠
+# WhatsApp-Gemini MCP Server with **UNLIMITED** Real-Time Intelligence 🧠🔍
 
-A Model Context Protocol server that integrates WhatsApp messaging with Google's Gemini AI, featuring **intelligent routing** between direct AI responses and specialized MCP tools for weather, tasks, and more.
+A Model Context Protocol server that integrates WhatsApp messaging with Google's Gemini AI, featuring **complete real-time intelligence** with Google Search grounding for ALL news, sports, events, sentiment analysis, and more.
 
-## 🚀 Current Production Features
+## 🚀 Current Production Features ⭐ **UNLIMITED INTELLIGENCE**
 
-- **🧠 Intelligent Routing**: Automatically routes weather queries to MCP tools, general queries to Gemini
-- **⚡ Real-time Weather**: Integration with National Weather Service API
-- **📱 WhatsApp Integration**: Full Twilio webhook processing with auto-replies  
+- **🧠 Intelligent AI Function Calling**: Gemini automatically discovers and uses ALL MCP tools
+- **🔍 Google Search Integration**: **LIVE sports results, breaking news, company sentiment, industry trends**
+- **🏏 Sports Events**: **Real-time cricket, football, tennis results - India vs England test series, IPL, World Cup, etc.**
+- **📰 Breaking News**: **Latest news events across all domains with source citations**
+- **⚡ Real-time Weather**: Current weather conditions globally  
+- **📱 WhatsApp Integration**: Full Twilio webhook processing with auto-replies
+- **💰 Financial Data**: Stock prices, crypto, company financials
 - **🔧 MCP Tools**: Send WhatsApp messages from VS Code Gemini
 - **🛡️ Error Handling**: Graceful fallbacks and character limit handling
 - **⚙️ Multi-threading**: Non-blocking webhook responses
@@ -14,15 +18,19 @@ A Model Context Protocol server that integrates WhatsApp messaging with Google's
 ## 🏗️ Production Architecture
 
 ```
-📱 WhatsApp Message
+📱 WhatsApp Message (ANY TOPIC!)
     ↓
-🌐 Twilio Webhook → production/whatsapp_mcp_bridge.py
-    ↓ (intelligent keyword analysis)
-🧠 Smart Routing:
-   • Weather keywords → MCP Weather Tools → Real forecast data
-   • General queries → Direct Gemini → Conversational responses
+🌐 Twilio Webhook → production/whatsapp_mcp_bridge_v2.py
+    ↓ (Gemini Function Calling + Auto-Discovery)
+🧠 Smart AI Routing:
+   • Sports queries → Google Search → Live results & analysis
+   • News events → Google Search → Real-time news with sources  
+   • Company sentiment → Google Search → Market analysis
+   • Weather → Weather MCP → Current conditions
+   • Stock prices → Financial MCP → Real-time market data
+   • ANY query → Appropriate tools automatically selected
     ↓
-📱 WhatsApp Auto-Reply (intelligently crafted)
+📱 WhatsApp Auto-Reply (comprehensive, intelligent response)
 ```
 
 ## 🛠️ Available Production Tools
