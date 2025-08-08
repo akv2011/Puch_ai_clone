@@ -100,7 +100,7 @@ MCP_SERVERS = [
                 "python",
                 "server.py"
             ],
-            env={"FINANCIAL_DATASETS_API_KEY": os.getenv("FINANCIAL_DATASETS_API_KEY", "714f22c9-a28c-4a13-8e9b-d4876ae1b5c0")}
+            env={"FINANCIAL_DATASETS_API_KEY": os.getenv("FINANCIAL_DATASETS_API_KEY", "714f22c9-e1b5c0")}
         )
     },
     {
