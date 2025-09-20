@@ -1,14 +1,14 @@
-# Multi-Server MCP System with WhatsApp Intelligence 🚀
+# Multi-Server MCP System with WhatsApp Intelligence 
 
 A comprehensive Model Context Protocol (MCP) ecosystem that integrates **WhatsApp messaging**, **Weather APIs**, **Financial Data**, **Task Management**, and **Google Gemini AI** for intelligent automation and conversation handling.
 
-## 📚 **Documentation**
+##  **Documentation**
 
-- 🔌 **[How to Add New MCP Servers](HOW_TO_ADD_MCP_SERVERS.md)** - Complete guide to extending your system
-- ⚙️ **[MCP Configuration Examples](HOW_TO_ADD_MCP_SERVERS.md#step-5-update-mcp-configuration)** - Real-world server configurations
-- 🌟 **[Available MCP Servers](HOW_TO_ADD_MCP_SERVERS.md#examples-of-available-mcp-servers)** - Browse popular integrations
+-  **[How to Add New MCP Servers](HOW_TO_ADD_MCP_SERVERS.md)** - Complete guide to extending your system
+- **[MCP Configuration Examples](HOW_TO_ADD_MCP_SERVERS.md#step-5-update-mcp-configuration)** - Real-world server configurations
+-  **[Available MCP Servers](HOW_TO_ADD_MCP_SERVERS.md#examples-of-available-mcp-servers)** - Browse popular integrations
 
-## 🎯 THE COMPLETE FLOW
+##  THE COMPLETE FLOW
 
 ```
 📱 WhatsApp User
